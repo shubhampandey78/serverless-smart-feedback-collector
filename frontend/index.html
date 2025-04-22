@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Feedback Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Submit Your Feedback</h2>
+  <form id="feedbackForm">
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <select id="rating" required>
+      <option value="">Rate us</option>
+      <option value="5">5 - Excellent</option>
+      <option value="4">4 - Good</option>
+      <option value="3">3 - Okay</option>
+      <option value="2">2 - Poor</option>
+      <option value="1">1 - Terrible</option>
+    </select>
+    <textarea id="message" placeholder="Your feedback..." rows="5" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="statusMessage"></p>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const statusMessage = document.getElementById('statusMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        rating: form.rating.value,
+        message: form.message.value
+      };
+
+      try {
+        const response = await fetch('https://your-api-gateway-url.amazonaws.com/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          statusMessage.innerText = "Feedback submitted successfully!";
+          form.reset();
+        } else {
+          statusMessage.innerText = "Error submitting feedback.";
+        }
+      } catch (error) {
+        statusMessage.innerText = "Network error. Try again later.";
+      }
+    });
+  </script>
+</body>
+</html>
