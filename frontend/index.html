@@ -4,7 +4,7 @@
   <title>Feedback Form</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body> 
   <h2>Submit Your Feedback</h2>
   <form id="feedbackForm">
     <input type="text" id="name" placeholder="Your Name" required />
@@ -46,7 +46,10 @@
 
         if (response.ok) {
           statusMessage.innerText = "Feedback submitted successfully!";
-          form.reset();
+          // Add a delay before resetting the form (e.g., 3 seconds)
+          setTimeout(() => {
+            form.reset();
+        }, 3000); // Delay of 3 seconds
         } else {
           statusMessage.innerText = "Error submitting feedback.";
         }
